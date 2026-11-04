@@ -1,0 +1,52 @@
+# Model Configurations and Documentation
+
+models:
+  - name: staging_job_postings
+    description: > 
+      "The cleaned job postings dataset. 
+      Contains one row per posting per scrape date 
+      (a job remains in the dataset for every day it was scraped). 
+      Error rows from the scraper have been removed."
+    columns:
+      - name: job_id
+        description: > 
+          The job ID from the source platform. 
+          Not unique in this table, as a job can appear across multiple scrape dates.
+      - name: search_term
+        description: The job role used for the search.
+      - name: search_date
+        description: The date the data was scraped.
+      - name: searched_at
+        description: The exact timestamp the data was scraped.
+      - name: search_location
+        description: The geographic location used for the search.
+      - name: job_title
+        description: The title of the job posting.
+      - name: company_name
+        description: "The employer's name, with whitespace trimmed."
+      - name: job_location
+        description: The location listed on the job posting.
+      - name: source_platform
+        description: "The platform where the job was posted (e.g., LinkedIn)."
+      - name: job_schedule_type
+        description: "The employment type (e.g., Full-time, Contract). Null values are intentionally left as-is."
+      - name: job_work_from_home
+        description: Boolean flag indicating if the job is remote.
+      - name: job_posted_at
+        description: "Relative time since posting (e.g., '10 hours ago'). Currently kept as raw text."
+      - name: job_salary
+        description: The raw salary text. Not yet parsed into numeric values.
+      - name: job_extensions_raw
+        description: "Raw JSON containing additional job details (e.g., benefits). Not yet parsed."
+
+  - name: staging_job_skills
+    description: > 
+      A normalized list of skills extracted from the job postings. 
+      A job may have duplicate skills if they were written differently in the source text.
+    columns:
+      - name: job_id
+        description: The ID of the job posting this skill belongs to.
+      - name: skill_id
+        description: The unique identifier for the skill.
+      - name: skill_keyword
+        description: "The name of the skill (e.g., Python, SQL)."

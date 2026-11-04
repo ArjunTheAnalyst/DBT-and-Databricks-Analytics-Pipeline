@@ -1,0 +1,11 @@
+# dbt source configuration
+
+sources: # top level dbt keyword used to define a source
+  - name: jobs # source name, used to reference this source in dbt models
+    database: raw # databricks catalog name
+    schema: jobs
+    tables:
+      - name: raw_job_postings
+        description: "Raw scraped data; one row per job posting."
+      - name: raw_job_skills
+        description: "Extracted skills; one row per skill per job."

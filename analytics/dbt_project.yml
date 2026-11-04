@@ -5,3 +5,23 @@ profile: databricks
 clean-targets:
   - "target"
   - "dbt_packages"
+
+
+# Staging, intermediate, and marts specify which folder the configuration applies to.
+# +schema specifies the schema name to create (e.g., dbt_dev_staging vs. dbt_prod_staging), 
+# while +materialized dictates if they are built as views or tables.
+# +persits_docs is written once at the project level to push table/column descriptions to the database on every dbt run.
+models:
+  analytics:
+    +persist_docs: # doing this only once as it ensures that the descriptions are applied to the models in the database
+      relation: true
+      columns: true
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    marts:
+      +materialized: table
+      +schema: marts
