@@ -36,8 +36,16 @@ models:
         description: "Relative time since posting (e.g., '10 hours ago'). Currently kept as raw text."
       - name: job_salary
         description: The raw salary text. Not yet parsed into numeric values.
-      - name: job_extensions_raw
-        description: "Raw JSON containing additional job details (e.g., benefits). Not yet parsed."
+      # - name: job_extensions_raw
+      #   description: "Raw JSON containing additional job details (e.g., benefits). Not yet parsed."
+      - name: has_health_insurance
+        description: Boolean flag indicating if the job offers health insurance.
+      - name: has_dental_insurance
+        description: Boolean flag indicating if the job offers dental insurance.
+      - name: has_paid_time_off
+        description: Boolean flag indicating if the job offers paid time off.
+      - name: has_no_degree_mentioned
+        description: Boolean flag indicating if the job has a degree requirement.
 
   - name: staging_job_skills
     description: > 
