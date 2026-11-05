@@ -24,3 +24,6 @@ FROM
     dev.information_schema.columns
 WHERE
     table_name LIKE 'staging_job_postings';
+
+-- Drop the staging schema and all its tables/views
+DROP SCHEMA dev.default_staging CASCADE;

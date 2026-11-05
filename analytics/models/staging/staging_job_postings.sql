@@ -38,7 +38,7 @@ cleaned AS
     -- Converts the raw JSON text into a structured Spark array of strings
         -- FROM_JSON(job_extensions_raw, 'ARRAY<STRING>'),
         job_extensions,
-    '{{ keyword }}') AS has_{{ keyword | lower | replace(' ', '_') }}
+    '{{ keyword }}') AS has_{{ clean_text(keyword) }}
     {{ ',' if not loop.last else ''}}
     {%- endfor -%}
 FROM

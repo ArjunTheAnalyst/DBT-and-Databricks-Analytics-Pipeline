@@ -2,11 +2,7 @@
 
 models:
   - name: staging_job_postings
-    description: > 
-      "The cleaned job postings dataset. 
-      Contains one row per posting per scrape date 
-      (a job remains in the dataset for every day it was scraped). 
-      Error rows from the scraper have been removed."
+    description: "The cleaned job postings dataset. Contains one row per posting per scrape date (a job remains in the dataset for every day it was scraped). Error rows from the scraper have been removed."
     columns:
       - name: job_id
         description: > 

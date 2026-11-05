@@ -9,12 +9,12 @@ SELECT
 FROM
     {{ ref('staging_job_postings') }};
 -- Run `dbt compile`, then check target/compiled/analytics/analyses/ to see the pure SQL translation.
--- To view the result, run: dbt show --inline "SELECT QUERY (Remove semicolon at the end of the query if you want to run it in dbt show)"
+-- To view the result, run: dbt show --inline "SELECT QUERY (Remove semicolon and hyphen at the end of the query if you want to run it in dbt show)"
 
 
 -- Below is a Jinja Statement tag, used for loops, logic, and variable assignment.
 -- '-' removes whitespace from the end of the line.
-{% set roles = ['data analyst', 'data engineer', 'data scientist'] -%}
+{% set roles = dbt_utils.get_column_values(table=ref('staging_job_postings'), column='search_term') -%}
 
 {% for role in roles -%}
 SELECT
@@ -23,12 +23,12 @@ SELECT
 FROM
     {{ ref('staging_job_postings') }}
 WHERE
-    search_term = '{{ role | title}}'
+    search_term = '{{ role }}'
 GROUP BY
     search_term;
-{{ 'UNION ALL' if not loop.last else '' }}; -- if this is not the last item
+{{ 'UNION ALL' if not loop.last else '' }} -- if this is not the last item
 {%- endfor %}
--- To view the result, run: dbt show --inline "SELECT QUERY (Remove semicolon at the end of the query if you want to run it in dbt show)"
+-- To view the result, run: dbt show --inline "SELECT QUERY (Remove semicolon and hyphen at the end of the query if you want to run it in dbt show)"
 
 
 -- Below is a Jinja filter that will convert the string to uppercase and replace spaces with underscores.
