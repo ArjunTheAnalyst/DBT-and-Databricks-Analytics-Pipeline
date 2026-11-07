@@ -25,6 +25,28 @@ cleaned AS
     REGEXP_REPLACE(job_via, '^via ', '') AS source_platform,
     job_posted_at,
     job_salary,
+
+    -- Clean the 'job_salary' column
+    -- 1. LOWER BOUND OF THE SALARY RANGE
+    {{ parse_salary('min') }} AS salary_min,
+
+    -- 2. UPPER BOUND OF THE SALARY RANGE
+    {{ parse_salary('max') }} AS salary_max,
+
+    ({{ parse_salary('min') }} + {{ parse_salary('max') }}) / 2 AS salary_avg,
+
+    -- 3. SALARY PERIOD
+    NULLIF(
+    REGEXP_EXTRACT(job_salary, 'an? (year|month|week|day|hour)', 1), 
+    '') AS salary_period,
+
+    -- 4. SALARY CURRENCY
+    COALESCE(
+    NULLIF(
+    TRIM(
+    REGEXP_EXTRACT(job_salary, '^([^0-9]+)', 1)),
+    ''), 'USD') AS salary_currency,
+
     job_schedule_type,
     job_work_from_home,
     -- job_extensions_raw,

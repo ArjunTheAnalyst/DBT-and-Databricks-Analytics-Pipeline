@@ -32,6 +32,16 @@ models:
         description: "Relative time since posting (e.g., '10 hours ago'). Currently kept as raw text."
       - name: job_salary
         description: The raw salary text. Not yet parsed into numeric values.
+      - name: salary_min
+        description: "The calculated lower bound of the salary range. Extracts the first number, applies K/M multipliers, and casts to a decimal."
+      - name: salary_max
+        description: "The calculated upper bound of the salary range. Extracts the last number, applies K/M multipliers, and casts to a decimal."
+      - name: salary_avg
+        description: "The midpoint of the salary range, calculated as (salary_min + salary_max) / 2."
+      - name: salary_period
+        description: "The time frame for the salary (e.g., year, month, hour). Null if not specified."
+      - name: salary_currency
+        description: "The currency symbol extracted from the text (e.g., $, £, ₹). Defaults to USD if no symbol is found."
       # - name: job_extensions_raw
       #   description: "Raw JSON containing additional job details (e.g., benefits). Not yet parsed."
       - name: has_health_insurance
