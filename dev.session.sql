@@ -92,3 +92,19 @@ FROM
     dev.staging.staging_job_postings
 WHERE
     job_salary IS NOT NULL;
+
+-- Verify 'int_skill_observations' row count
+SELECT
+    COUNT(*)
+FROM
+    dev.intermediate.int_skill_observations;
+
+-- Verify 'fact_job_postings' row count
+SELECT
+    COUNT(*) AS row_count,
+    COUNT(DISTINCT job_id) AS distinct_job_cnt
+FROM
+    dev.marts.fact_job_postings;
+
+-- Drop 'seeds' table from default schema
+DROP TABLE IF EXISTS dev.default.skill_categories;
