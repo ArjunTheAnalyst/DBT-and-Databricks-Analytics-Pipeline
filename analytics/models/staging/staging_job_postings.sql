@@ -71,4 +71,5 @@ FROM
 SELECT
     *
 FROM
-    cleaned;
+    cleaned
+-- Semicolon removed intentionally to prevent syntax errors in the dbt 'unit_test'

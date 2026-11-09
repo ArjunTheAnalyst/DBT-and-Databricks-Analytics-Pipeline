@@ -80,3 +80,23 @@ models:
         description: The unique identifier for the skill.
       - name: skill_keyword
         description: "The name of the skill (e.g., Python, SQL)."
+
+# A dbt unit test uses a small set of fake input rows to verify that your SQL logic 
+# and macros produce the exact expected output before running them on real data.
+unit_tests:
+  - name: test_parse_salary_shape
+    description: This handles ranges, single values, nulls, and missing currency symbols.
+    model: staging_job_postings
+    given:
+      - input: source('jobs', 'raw_job_postings')
+        rows:
+          - {job_id: 1, job_salary: "100K–169K a year"}
+          - {job_id: 2, job_salary: "69.50 an hour"}
+          - {job_id: 3, job_salary: null}
+          - {job_id: 4, job_salary: "120000 a year"}
+    expect:
+      rows:
+        - {job_id: 1, salary_min: 100000, salary_max: 169000, salary_currency: "USD"}
+        - {job_id: 2, salary_min: 69.5, salary_max: 69.5, salary_currency: "USD"}
+        - {job_id: 3, salary_min: null, salary_max: null, salary_currency: "USD"}
+        - {job_id: 4, salary_min: 120000, salary_max: 120000, salary_currency: "USD"}

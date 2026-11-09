@@ -108,3 +108,25 @@ FROM
 
 -- Drop 'seeds' table from default schema
 DROP TABLE IF EXISTS dev.default.skill_categories;
+
+-- EDA: Identify abnormally high annual salaries (>= $1M USD)
+SELECT
+    job_id,
+    search_term,
+    job_title,
+    salary_min,
+    salary_max,
+    salary_period,
+    salary_currency
+FROM
+    dev.staging.staging_job_postings
+WHERE
+    salary_period LIKE 'year'
+AND
+    (
+        salary_min >= 1000000
+    OR
+        salary_max >= 1000000
+    )
+AND
+    salary_currency LIKE 'USD';
