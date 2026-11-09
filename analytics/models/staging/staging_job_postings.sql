@@ -6,7 +6,9 @@ WITH source AS
 FROM
     {{ source('jobs', 'raw_job_postings') }}
 WHERE
-    error IS NULL),
+    error IS NULL
+AND
+    job_id IS NOT NULL),
 
 parsed AS
 (SELECT
