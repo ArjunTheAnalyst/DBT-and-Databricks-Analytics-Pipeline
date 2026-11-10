@@ -130,3 +130,52 @@ AND
     )
 AND
     salary_currency LIKE 'USD';
+
+-- Find the minimum 'searched_at' date to establish the backfill baseline
+SELECT
+    searched_at
+FROM
+    dev.staging.staging_job_postings
+ORDER BY
+    searched_at;
+
+-- Inspect historical job versions that have since been updated
+SELECT
+    job_id,
+    job_title,
+    salary_min,
+    salary_max,
+    dbt_valid_from,
+    dbt_valid_to
+FROM
+    dev.snapshots.job_postings_snapshot
+WHERE
+    dbt_valid_to IS NOT NULL;
+
+-- Verify specific job history after the July 1–4, 2025 snapshot runs
+SELECT
+    *
+FROM
+    dev.snapshots.job_postings_snapshot
+WHERE
+    job_id = '11ea4e57e124886fa823d8281d684a9a';
+
+
+-- Identify which companies have the most frequently updated job postings
+SELECT
+    company_name,
+    COUNT(DISTINCT job_id) AS jobs_changed
+FROM
+    dev.snapshots.job_postings_snapshot
+WHERE
+    dbt_valid_to IS NOT NULL
+GROUP BY
+    company_name
+ORDER BY
+    jobs_changed DESC;
+
+-- Verify 'job_postings_snapshot' row count
+SELECT
+    COUNT(*)
+FROM
+    dev.snapshots.job_postings_snapshot;
