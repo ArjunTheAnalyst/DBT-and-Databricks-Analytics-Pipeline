@@ -1,3 +1,11 @@
+{{
+    config(
+        materialized = 'incremental',
+        incremental_strategy = 'merge',
+        unique_key = 'job_id'
+    )
+}}
+
 WITH job_postings AS
 (SELECT
     *
@@ -52,4 +60,9 @@ FROM
 WHERE
 -- To satisfy the unique test, we are only keeping the most recent job so older values 
 -- at a later 'searched_at' date that have the same 'job_id' are going to get filtered out
-    RN = 1;
+    RN = 1
+
+-- is_incremental() adds a filter to only process rows newer than the max search_date in the existing table
+{% if is_incremental() %}
+AND search_date > (SELECT MAX(search_date) FROM {{ this }})
+{% endif %};

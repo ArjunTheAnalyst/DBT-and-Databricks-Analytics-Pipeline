@@ -174,8 +174,38 @@ GROUP BY
 ORDER BY
     jobs_changed DESC;
 
+-- Identify updated/expired jobs
+SELECT
+    *
+FROM
+    dev.snapshots.job_postings_snapshot
+WHERE
+    dbt_valid_to IS NOT NULL;
+
+
 -- Verify 'job_postings_snapshot' row count
 SELECT
     COUNT(*)
 FROM
     dev.snapshots.job_postings_snapshot;
+
+-- Track rows updated vs. inserted across recent MERGE operations
+SELECT
+    operation,
+    operationMetrics['numOutputRows'] AS rows_written,
+    operationMetrics['numSourceRows'] AS rows_merged_in,
+    operationMetrics['numTargetRowsUpdated'] rows_updated,
+    operationMetrics['numTargetRowsInserted'] rows_inserted
+FROM
+    (DESCRIBE HISTORY dev.marts.fact_job_postings)
+WHERE
+    operation IN ('CREATE OR REPLACE TABLE AS SELECT', 'MERGE')
+ORDER BY
+    version DESC;
+
+-- Simulate an incremental update by deleting the latest date's rows
+DELETE FROM dev.marts.fact_job_postings
+WHERE search_date = '2026-06-30';
+
+-- Note: Run `dbt run --full-refresh --select fact_job_postings` 
+-- to rebuild this table from scratch, bypassing the incremental logic.
