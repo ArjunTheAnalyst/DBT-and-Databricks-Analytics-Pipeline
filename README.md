@@ -9,6 +9,9 @@ A production dbt pipeline on **Databricks** built on raw job-posting scrapes, re
 - Loads incrementally and runs automatically on a Databricks Job
 
 ### 🗺️ Project Architecture
+The pipeline flows from raw sources through staging and intermediate models into tested Fact, Dimension, and Bridge tables.
+
+![dag](images/dbt_dag.png)
 
 | Component | What It Does | Location |
 | :--- | :--- | :--- |
