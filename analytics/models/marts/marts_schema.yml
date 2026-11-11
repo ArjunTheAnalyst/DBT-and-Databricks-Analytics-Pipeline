@@ -101,7 +101,8 @@ models:
   - name: bridge_job_skills
     description: >
       One row per (job_id, skill_keyword) for jobs present in fact_job_postings.
-      A skill_id repeats on a job when the posting names it two ways (spark, pyspark).
+      The grain is based on skill_keyword because different terms (e.g., "spark" and "pyspark") have distinct skill_ids and are treated as separate skills.
+      A skill_id only repeats on a job if the exact same skill is extracted multiple times from the posting.
       Referential integrity guaranteed by construction.
     columns:
       - name: job_id

@@ -42,7 +42,7 @@ The marts keep each job's latest scrape, while the snapshot table tracks every v
 
 The documentation site is generated directly from the dbt models, YAMLs, and tests:
 
-🔗 **[View the Live dbt Docs Site](YOUR_GITHUB_PAGES_LINK_HERE)**
+🔗 **[View the Live dbt Docs Site](https://arjuntheanalyst.github.io/DBT-and-Databricks-Analytics-Pipeline/)**
 
 It includes:
 *   The full lineage graph (raw → staging → marts)
