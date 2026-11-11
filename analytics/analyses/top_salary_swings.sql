@@ -24,7 +24,6 @@ LIMIT 10;
 ╞════════════════════════════════════════╪═════════════════════════════╪═══════════════╪════════════════╪══════════════╡
 │ PMO Analyst/Associate                  ┆ Leading Edge                ┆ 60000.00      ┆ 1000000.00     ┆ 940000.00    │
 │ Decision Sciences Analyst              ┆ Kobie Marketing, Inc        ┆ 110000.00     ┆ 1000000.00     ┆ 890000.00    │
-│ Data Analyst People Tech               ┆ Tabby | تابي                ┆ 120000.00     ┆ 1000000.00     ┆ 880000.00    │
 │ Senior Work Force Management Analyst   ┆ Abu Dhabi Islamic Bank PJSC ┆ 120000.00     ┆ 1000000.00     ┆ 880000.00    │
 │ Data Analyst (Local only, 100  onsite) ┆ Ledgent Technology          ┆ 150000.00     ┆ 1000000.00     ┆ 850000.00    │
 │ Linux System Engineer                  ┆ Canonical                   ┆ 180000.00     ┆ 1000000.00     ┆ 820000.00    │
