@@ -42,3 +42,7 @@ GROUP BY
     skills.category
 ORDER BY
     demand_percentage DESC;
+
+-- NOTE:
+-- No deduplication needed here. Because we use COUNT(DISTINCT job_id), 
+-- any duplicate rows in the bridge table will be ignored when calculating the count.
